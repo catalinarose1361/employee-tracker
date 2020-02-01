@@ -102,13 +102,57 @@ function addRole() {
 }
 function addEmployee() {
     inquirer
-      .prompt({
-        name: "",
-        type: "",
-        message: "",
-        choices: []
-      })
-      .then(function(answer) {
+      .prompt([
+    {
+        name: "firstName",
+        type: "input",
+        message: "Enter First Name ->"
+
+    },
+    {
+        name: "lastName",
+        type: "input",
+        message: "Enter Last Name ->"
+
+    }, 
+    {
+        name: "departmentID",
+        type: "input",
+        message: "Input The Department Id By Number: 1-Sales, 2-Engineering, 3-Finance, 4-Legal ->",
+       
+    
+    },
+    {
+        name: "roleID",
+        type: "input",
+        message: "Input The Role Id By Number: 1-Sales Lead, 2-Sales Person, 3-Lead Engineer, 4-Software Engineer, 5-Accountant, 6-Legal Team Lead, 7-Lawyer  ->",
+       
+    
+    },
+    {
+        name: "managerID",
+        type: "input",
+        message: "Input Manager Id By Number ->"
+       
+    
+    }
+]).then(function(answer) {
         
+        connection.query(
+            "INSERT INTO employee SET ?",
+            {
+              first_name: answer.firstName,
+              last_name: answer.lastName,
+              department_id: answer.departmentID,
+              role_id: answer.roleID,
+              manager_id: answer.managerID
+            },
+            function(err) {
+              if (err) throw err;
+              console.log("Your employee was created successfully!");
+              // re-prompt the user for an initial action
+              start();
+            }
+          );
       });
 }
