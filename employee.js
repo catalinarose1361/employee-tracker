@@ -23,7 +23,7 @@ function start() {
         name: "initialAction",
         type: "list",
         message: "What action would you like to take?",
-        choices: ["Add A Department", "Add A Role", "Add An Employee"]
+        choices: ["Add A Department", "Add A Role", "Add An Employee", "View Departments", "View Roles", "View Employees" ]
       })
       .then(function(answer) {
        if (answer.initialAction === "Add A Department") {
@@ -32,6 +32,12 @@ function start() {
            addRole();
        } else if(answer.initialAction === "Add An Employee") {
            addEmployee();
+       } else if(answer.initialAction === "View Departments") {
+            viewDepartments();
+       } else if(answer.initialAction === "View Roles") {
+          viewRoles();
+       } else if(answer.initialAction === "View Employees") {
+         viewEmployees();
        } else {
            connection.end();
        }
@@ -155,4 +161,13 @@ function addEmployee() {
             }
           );
       });
+}
+function viewDepartments() {
+
+}
+function viewRoles() {
+
+}
+function viewEmployees() {
+
 }
