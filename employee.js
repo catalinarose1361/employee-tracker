@@ -54,7 +54,7 @@ function addDepartment() {
             },
             function(err) {
               if (err) throw err;
-              console.log("Your auction was created successfully!");
+              console.log("Your Department was created successfully!");
               // re-prompt the user for an initial action
               start();
             }
@@ -63,14 +63,41 @@ function addDepartment() {
 }
 function addRole() {
     inquirer
-      .prompt({
-        name: "",
-        type: "",
-        message: "",
-        choices: []
-      })
-      .then(function(answer) {
+      .prompt([
+    {
+        name: "newTitle",
+        type: "input",
+        message: "New Role Title ->"
+
+    },
+    {
+        name: "newSalary",
+        type: "input",
+        message: "Yearly Salary ->"
+
+    },
+    {
+        name: "departmentID",
+        type: "input",
+        message: "Input The Department Id By Number: 1-Sales, 2-Engineering, 3-Finance, 4-Legal ->",
+       
+    
+    }]).then(function(answer) {
         
+        connection.query(
+            "INSERT INTO role SET ?",
+            {
+              title: answer.newTitle,
+              salary: answer.newSalary,
+              department_id: answer.departmentID
+            },
+            function(err) {
+              if (err) throw err;
+              console.log("Your role was created successfully!");
+              // re-prompt the user for an initial action
+              start();
+            }
+          );
       });
 }
 function addEmployee() {
