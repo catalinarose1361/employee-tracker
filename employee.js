@@ -32,19 +32,33 @@ function start() {
            addRole();
        } else if(answer.initialAction === "Add An Employee") {
            addEmployee();
+       } else {
+           connection.end();
        }
       });
 }
 function addDepartment() {
     inquirer
-      .prompt({
-        name: "",
-        type: "",
-        message: "",
-        choices: []
-      })
-      .then(function(answer) {
+      .prompt(
+    {
+        name: "newDepartment",
+        type: "input",
+        message: "Department Name ->"
+
+    }).then(function(answer) {
         
+        connection.query(
+            "INSERT INTO department SET ?",
+            {
+              name: answer.newDepartment,
+            },
+            function(err) {
+              if (err) throw err;
+              console.log("Your auction was created successfully!");
+              // re-prompt the user for an initial action
+              start();
+            }
+          );
       });
 }
 function addRole() {
