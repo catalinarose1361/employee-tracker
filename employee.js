@@ -166,12 +166,21 @@ function viewDepartments() {
   connection.query("SELECT * FROM department", function(error, result) {
     if (error) throw err;
     console.table(result);
+    start();
   }) 
   
 }
 function viewRoles() {
-
+  connection.query("SELECT * FROM role", function(error, result) {
+    if (error) throw err;
+    console.table(result);
+    start();
+  }) 
 }
 function viewEmployees() {
-
+  connection.query("SELECT * FROM employee", function(error, result) {
+    if (error) throw err;
+    console.table(result);
+    start();
+  }) 
 }
