@@ -33,11 +33,11 @@ function start() {
        } else if(answer.initialAction === "Add An Employee") {
            addEmployee();
        } else if(answer.initialAction === "View Departments") {
-            viewDepartments();
+           viewDepartments();
        } else if(answer.initialAction === "View Roles") {
-          viewRoles();
+           viewRoles();
        } else if(answer.initialAction === "View Employees") {
-         viewEmployees();
+          viewEmployees();
        } else {
            connection.end();
        }
@@ -163,7 +163,11 @@ function addEmployee() {
       });
 }
 function viewDepartments() {
-
+  connection.query("SELECT * FROM department", function(error, result) {
+    if (error) throw err;
+    console.table(result);
+  }) 
+  
 }
 function viewRoles() {
 
