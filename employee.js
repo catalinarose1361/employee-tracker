@@ -23,7 +23,7 @@ function start() {
         name: "initialAction",
         type: "list",
         message: "What action would you like to take?",
-        choices: ["Add A Department", "Add A Role", "Add An Employee", "View Departments", "View Roles", "View Employees" ]
+        choices: ["Add A Department", "Add A Role", "Add An Employee", "View Departments", "View Roles", "View Employees", "Update Employee Roles"]
       })
       .then(function(answer) {
        if (answer.initialAction === "Add A Department") {
@@ -38,6 +38,8 @@ function start() {
            viewRoles();
        } else if(answer.initialAction === "View Employees") {
           viewEmployees();
+       } else if(answer.initialAction === "Update Employee Roles") {
+         updateEmployeeRoles();
        } else {
            connection.end();
        }
@@ -183,4 +185,53 @@ function viewEmployees() {
     console.table(result);
     start();
   }) 
+}
+function updateEmployeeRoles () {
+connection.query("SELECT * FROM employee", function(error, results) {
+  inquirer
+  .prompt([
+
+{
+    name: "updateEmployee",
+    type: "list",
+    message: "Select An Employee",
+    choices: function() {
+      var employeeArray = [];
+      for (var i = 0; i < results.length; i++) {
+        employeeArray.push(results[i].first_name);
+      }
+      return employeeArray;
+    },
+
+},
+{
+    name: "updateRole",
+    type: "input",
+    message: "Enter Role Id",
+    
+
+},
+
+]).then(function(answer) {
+    
+    connection.query(
+      "UPDATE employee SET ? WHERE ?",
+      [
+        {
+          role_id: answer.updateRole
+        },
+        {
+          first_name: answer.updateEmployee
+        }
+      ],
+      function(error) {
+        if (error) throw err;
+        console.log("Employee Updated Sucessfully");
+        start();
+      }
+      );
+
+    })
+});
+
 }
