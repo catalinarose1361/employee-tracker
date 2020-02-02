@@ -13,11 +13,14 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     // run the start function after the connection is made to prompt the user
+    viewAllData();
     start();
 });
 
 // function which prompts the user for what action they should take
 function start() {
+  
+  }
     inquirer
       .prompt({
         name: "initialAction",
@@ -44,7 +47,7 @@ function start() {
            connection.end();
        }
       });
-}
+
 function addDepartment() {
     inquirer
       .prompt(
@@ -234,4 +237,10 @@ connection.query("SELECT * FROM employee", function(error, results) {
     })
 });
 
+}
+function viewAllData () {
+  connection.query("SELECT employee.first_name, employee.last_name, employee.department_id, employee.role_id, employee.manager_id, employee.id, department.name, role.title, role.salary, role.department_id FROM ((employee INNER JOIN role ON employee.role_id = role.id)INNER JOIN department ON employee.department_id = department.id)", function(error, result) {
+    if (error) throw err;
+    console.table(result);
+  }) 
 }
